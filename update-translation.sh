@@ -38,7 +38,7 @@ else
     cd "$WORKING_DIR"
 fi
 
-# Main timestamp loop
+# Main loop
 for BRANCH in "MASTER" "STABLE" "OLD"
 do
     # Magic with vars
@@ -71,29 +71,20 @@ do
 
     # Compare local/remote timestamps.
     BR_WORKDIR=$BR_LNAME
-    if [ -d "./$BR_WORKDIR" ]
+    if [ ! -d "$BR_WORKDIR" ]
     then
-        echo "Branch $BR_WORKDIR EXIST"
-    else
-        echo "BR WORK $BR_WORKDIR DIR IS empty"
-        mkdir "./$BR_WORKDIR"
+        mkdir "$BR_WORKDIR"
     fi
     if [ -f "$BR_WORKDIR/timestamp.txt" ]
     then
-        echo "Branch TS file exist. Checking value."
         BR_LOCAL_TS=$(cat "$BR_WORKDIR/timestamp.txt")
-        echo "DEBUG: BR LOCAL_TS: $BR_LOCAL_TS"
         if [ $BR_LOCAL_TS -lt $BR_REMOTE_TS ]
         then
           TO_UPDATE=true
-          echo "Need update to $BR_LNAME branch"
-        else
-          echo "Branch '$BR_LNAME' don't need update"
         fi
     else
         echo "$BR_REMOTE_TS" > $BR_WORKDIR/timestamp.txt
         TO_UPDATE=true
-        echo "Branch TS file does not exist."
     fi
     if $TO_UPDATE
     then
@@ -106,18 +97,16 @@ do
       # 2. Compile and archive
       msgfmt -o cataclysm-dda.mo ${BR_LNAME}.po
       MO_DIR="lang/mo/$LANG/LC_MESSAGES/"
-      if [ -d "$MO_DIR" ]
+      if [ ! -d "$MO_DIR" ]
       then
-        cp cataclysm-dda.mo $MO_DIR
-      else
         mkdir -p $MO_DIR
-        cp cataclysm-dda.mo $MO_DIR
       fi
+      cp cataclysm-dda.mo $MO_DIR
       zip -q -9 latest.zip $MO_DIR/cataclysm-dda.mo
       tar -z -c -f latest.tar.gz $MO_DIR/cataclysm-dda.mo
 
       # 3. Upload translation to ftp
-      echo "Start uploading... $BR_LNAME"
+      echo "Start uploading... $BR_LNAME updates."
       FTP_CMD="cd data/$LANG/$BR_LNAME; put latest.zip; put latest.tar.gz; \\
       put cataclysm-dda.mo; put timestamp.txt; bye"
       lftp -e "$FTP_CMD" -u $FTP_USER,$FTP_PASSWD $FTP_HOST 
@@ -129,4 +118,4 @@ do
       rm *.po
       cd $WORKING_DIR
     fi
-done # End of main loop
+done
