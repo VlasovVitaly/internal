@@ -11,11 +11,14 @@ FTP_HOST="<WEB SITE FTP SERVER>"
 FTP_USER="<FTP USERNAME>"
 FTP_PASSWD="<FTP_PASSWORD>"
 
-source cred.sh
+# Put all credentials info in this file if you want hide them.
+# FTP_USER FTP_PASSWD TRANSIFEX_USER TRANSIFEX_PASSWD
+#source cred.sh
 
-LOCAL_DIR_ROOT=$PWD
-WORKING_DIR="$LOCAL_DIR_ROOT"
+# Where script will be store all files.
+WORKING_DIR="<WORKING DIR>"
 
+# This is constant values. Don't change it.
 MASTER_RESOURCE="master-cataclysm-dda"
 STABLE_RESOURCE="stable-cataclysm-dda"
 OLD_RESOURCE="old-cataclysm-dda"
@@ -24,7 +27,8 @@ STABLE_TS_FILE="stable-timestamp.txt"
 MASTER_TS_FILE="master-timestamp.txt"
 OLD_TS_FILE="old-timestamp.txt"
 
-LANG="ru" # Change it to yout language.
+# Change it to your language.
+LANG="ru"
 
 if [ -d "$WORKING_DIR" ]
 then
