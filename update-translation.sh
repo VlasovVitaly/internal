@@ -30,6 +30,8 @@ OLD_TS_FILE="old-timestamp.txt"
 # Change it to your language.
 LANG="ru"
 
+OLD_PWD=$PWD
+
 if [ -d "$WORKING_DIR" ]
 then
     cd "$WORKING_DIR"
@@ -119,3 +121,4 @@ do
       cd $WORKING_DIR
     fi
 done
+cd $OLD_PWD
