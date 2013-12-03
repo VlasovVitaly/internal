@@ -42,31 +42,34 @@ fi
 for BRANCH in "MASTER" "STABLE" "OLD"
 do
     # Magic with vars
+    # Need update flag
     TO_UPDATE=false
+    # Branch name in lowercase
     BR_LNAME=$(echo $BRANCH | tr '[:upper:]' '[:lower:]')
+    # Local last update timestamp for branch.
     TMP="L_TS_$BRANCH"
     BR_LOCAL_TS=${!TMP}
+    # Transifex resource slug(internal name).
     TMP="${BRANCH}_RESOURCE"
     BR_RESOURCE=${!TMP}
+    # Oblosete var. TODO remove it. 
     TMP="${BRANCH}_TS_FILE"
     BR_TS_FILE=${!TMP}
-    echo "DEBUG: BR RESOURCE: $BR_RESOURCE"
-    # Get remote last-update timestamp
+    # Remote last update timestamp for branch.
     BR_REMOTE_TS=$(wget --quiet --output-document=- --user=$TRANSIFEX_USER \
     --password=$TRANSIFEX_PASSWD \
     $TRANSIFEX_API_URL/resource/$BR_RESOURCE/stats/$LANG/ | \
     grep '"last_update"' | \
     grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}')
-    echo "DEBUG: BR REM TS: $BR_REMOTE_TS"
     if [ -z "$BR_REMOTE_TS" ]
     then
-        echo "Can't get last update info for Master branch"
+        echo "'$BR_LNAME': Unable to get last update timestamp from API."
         exit 1
     else
         BR_REMOTE_TS=$(date --date="$BR_REMOTE_TS" +"%s")
     fi
-    echo "DEBUG: BR REM TS: $BR_REMOTE_TS"
-    # Check local timestamp for branch
+
+    # Compare local/remote timestamps.
     BR_WORKDIR=$BR_LNAME
     if [ -d "./$BR_WORKDIR" ]
     then
