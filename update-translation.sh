@@ -111,7 +111,7 @@ do
       echo "Start uploading... $BR_LNAME updates."
       FTP_CMD="cd data/$LANG/$BR_LNAME; put latest.zip; put latest.tar.gz; \\
       put cataclysm-dda.mo; put timestamp.txt; bye"
-      lftp -e "$FTP_CMD" -u $FTP_USER,$FTP_PASSWD $FTP_HOST 
+      lftp -e "$FTP_CMD" -u $FTP_USER,$FTP_PASSWD $FTP_HOST &>/dev/null
 
       # 4. Clean
       rm -rf lang
