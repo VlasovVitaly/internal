@@ -23,10 +23,6 @@ MASTER_RESOURCE="master-cataclysm-dda"
 STABLE_RESOURCE="stable-cataclysm-dda"
 OLD_RESOURCE="old-cataclysm-dda"
 
-STABLE_TS_FILE="stable-timestamp.txt"
-MASTER_TS_FILE="master-timestamp.txt"
-OLD_TS_FILE="old-timestamp.txt"
-
 # Change it to your language.
 LANG="ru"
 
@@ -54,9 +50,6 @@ do
     # Transifex resource slug(internal name).
     TMP="${BRANCH}_RESOURCE"
     BR_RESOURCE=${!TMP}
-    # Oblosete var. TODO remove it. 
-    TMP="${BRANCH}_TS_FILE"
-    BR_TS_FILE=${!TMP}
     # Remote last update timestamp for branch.
     BR_REMOTE_TS=$(wget --quiet --output-document=- --user=$TRANSIFEX_USER \
     --password=$TRANSIFEX_PASSWD \
