@@ -44,9 +44,6 @@ do
     TO_UPDATE=false
     # Branch name in lowercase
     BR_LNAME=$(echo $BRANCH | tr '[:upper:]' '[:lower:]')
-    # Local last update timestamp for branch.
-    TMP="L_TS_$BRANCH"
-    BR_LOCAL_TS=${!TMP}
     # Transifex resource slug(internal name).
     TMP="${BRANCH}_RESOURCE"
     BR_RESOURCE=${!TMP}
