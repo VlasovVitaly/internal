@@ -2,21 +2,23 @@
 set -e
 #set -x
 
-TRANSIFEX_USER="<TRANSIFEX_USERNAME>"
-TRANSIFEX_PASSWD="<TRANSIFEX_PASSWORD>"
+# Transifex.com user and password
+TRANSIFEX_USER=""
+TRANSIFEX_PASSWD=""
+# This is constant transifex.com API URL.
 TRANSIFEX_API_URL="https://www.transifex.com/api/2/project/cataclysm-dda"
 
 
-FTP_HOST="<WEB SITE FTP SERVER>"
-FTP_USER="<FTP USERNAME>"
-FTP_PASSWD="<FTP_PASSWORD>"
+FTP_HOST=""
+FTP_USER=""
+FTP_PASSWD=""
 
 # Put all credentials info in this file if you want hide them.
 # FTP_USER FTP_PASSWD TRANSIFEX_USER TRANSIFEX_PASSWD
 #source cred.sh
 
 # Where script will be store all files.
-WORKING_DIR="<WORKING DIR>"
+WORKING_DIR=""
 
 # This is constant values. Don't change it.
 MASTER_RESOURCE="master-cataclysm-dda"
@@ -56,8 +58,8 @@ then
 else
     if [ -z "$WORKING_DIR" ]
     then
-        echo "You need to specify full path of working dir."
-        echo " Working dir value is stored in \$WORKINGDIR."
+        echo "You need to specify full path of working directory."
+        echo "Working directory value is stored in \$WORKINGDIR variable."
         exit 1
     fi
     echo "Initial run. Check parameters..."
