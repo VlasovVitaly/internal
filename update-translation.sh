@@ -28,14 +28,44 @@ LANG="ru"
 
 OLD_PWD=$PWD
 
+function check_requirements {
+    check_passed=0
+    for exe in "grep" "wget" "msgfmt" "tar" "zip" "lftp"
+    do
+        if !which $exe &>/dev/null
+        then
+            echo "Required executable '$exe' was not found."
+            check_passed=1
+        fi
+    done
+    for var_name in "TRANSIFEX_USER" "TRANSIFEX_PASSWD" "FTP_HOST" "FTP_USER" "FTP_PASSWD"
+    do
+        req_var=$var_name
+        if [ -z "${!req_var}" ]
+        then
+            echo "Required variable '$var_name' is not set." 
+            check_passed=1
+        fi
+    done
+    return $check_passed
+}
+
 if [ -d "$WORKING_DIR" ]
 then
     cd "$WORKING_DIR"
 else
+    if [ -z "$WORKING_DIR" ]
+    then
+        echo "You need to specify full path of working dir."
+        echo " Working dir value is stored in \$WORKINGDIR."
+        exit 1
+    fi
+    echo "Initial run. Check parameters..."
+    check_requirements
     mkdir "$WORKING_DIR"
     cd "$WORKING_DIR"
 fi
-
+exit 0
 # Main loop
 for BRANCH in "MASTER" "STABLE" "OLD"
 do
