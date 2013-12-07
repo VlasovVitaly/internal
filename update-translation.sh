@@ -72,6 +72,7 @@ do
         BR_LOCAL_TS=$(cat "$BR_WORKDIR/timestamp.txt")
         if [ $BR_LOCAL_TS -lt $BR_REMOTE_TS ]
         then
+          echo "$BR_REMOTE_TS" > $BR_WORKDIR/timestamp.txt
           TO_UPDATE=true
         fi
     else
