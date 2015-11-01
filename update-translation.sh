@@ -12,6 +12,7 @@ TRANSIFEX_API_URL="https://www.transifex.com/api/2/project/cataclysm-dda"
 FTP_HOST=""
 FTP_USER=""
 FTP_PASSWD=""
+FTP_PREFIX=""
 
 # Put all credentials info in this file if you want hide them.
 # FTP_USER FTP_PASSWD TRANSIFEX_USER TRANSIFEX_PASSWD
@@ -139,7 +140,7 @@ do
 
           # 3. Upload translation to ftp
           echo "Start uploading... $BR_LNAME updates."
-          FTP_CMD="cd data/$LL/$BR_LNAME; put latest.zip; put latest.tar.gz; \\
+          FTP_CMD="cd $FTP_PREFIX/$LL/$BR_LNAME; put latest.zip; put latest.tar.gz; \\
           put cataclysm-dda.mo; put timestamp.txt; bye"
           lftp -e "$FTP_CMD" -u $FTP_USER,$FTP_PASSWD $FTP_HOST &>/dev/null
 
