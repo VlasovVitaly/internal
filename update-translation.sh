@@ -26,7 +26,7 @@ STABLE_RESOURCE="stable-cataclysm-dda"
 OLD_RESOURCE="old-cataclysm-dda"
 
 # Change it to your language.
-LANG="ru"
+LANGS="ru es_AR de it_IT es_ES"
 
 OLD_PWD=$PWD
 
@@ -67,81 +67,89 @@ else
     mkdir "$WORKING_DIR"
     cd "$WORKING_DIR"
 fi
-exit 0
+
 # Main loop
-for BRANCH in "MASTER" "STABLE" "OLD"
+for LL in $LANGS
 do
-    # Magic with vars
-    # Need update flag
-    TO_UPDATE=false
-    # Branch name in lowercase
-    BR_LNAME=$(echo $BRANCH | tr '[:upper:]' '[:lower:]')
-    # Transifex resource slug(internal name).
-    TMP="${BRANCH}_RESOURCE"
-    BR_RESOURCE=${!TMP}
-    # Remote last update timestamp for branch.
-    BR_REMOTE_TS=$(wget --quiet --output-document=- --user=$TRANSIFEX_USER \
-    --password=$TRANSIFEX_PASSWD \
-    $TRANSIFEX_API_URL/resource/$BR_RESOURCE/stats/$LANG/ | \
-    grep '"last_update"' | \
-    grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}')
-    if [ -z "$BR_REMOTE_TS" ]
+    if [ ! -d "$WORKING_DIR/$LL" ]
     then
-        echo "'$BR_LNAME': Unable to get last update timestamp from API."
-        exit 1
-    else
-        BR_REMOTE_TS=$(date --date="$BR_REMOTE_TS" +"%s")
+        mkdir "$WORKING_DIR/$LL"
     fi
-
-    # Compare local/remote timestamps.
-    BR_WORKDIR=$BR_LNAME
-    if [ ! -d "$BR_WORKDIR" ]
-    then
-        mkdir "$BR_WORKDIR"
-    fi
-    if [ -f "$BR_WORKDIR/timestamp.txt" ]
-    then
-        BR_LOCAL_TS=$(cat "$BR_WORKDIR/timestamp.txt")
-        if [ $BR_LOCAL_TS -lt $BR_REMOTE_TS ]
+    cd "$WORKING_DIR/$LL"
+    for BRANCH in "MASTER" "STABLE" "OLD"
+    do
+        # Magic with vars
+        # Need update flag
+        TO_UPDATE=false
+        # Branch name in lowercase
+        BR_LNAME=$(echo $BRANCH | tr '[:upper:]' '[:lower:]')
+        # Transifex resource slug(internal name).
+        TMP="${BRANCH}_RESOURCE"
+        BR_RESOURCE=${!TMP}
+        # Remote last update timestamp for branch.
+        BR_REMOTE_TS=$(wget --quiet --output-document=- --user=$TRANSIFEX_USER \
+        --password=$TRANSIFEX_PASSWD \
+        $TRANSIFEX_API_URL/resource/$BR_RESOURCE/stats/$LL/ | \
+        grep '"last_update"' | \
+        grep -oE '[0-9]{4}-[0-9]{2}-[0-9]{2} [0-9]{2}:[0-9]{2}:[0-9]{2}')
+        if [ -z "$BR_REMOTE_TS" ]
         then
-          echo "$BR_REMOTE_TS" > $BR_WORKDIR/timestamp.txt
-          TO_UPDATE=true
+            echo "'$BR_LNAME': Unable to get last update timestamp from API."
+            exit 1
+        else
+            BR_REMOTE_TS=$(date --date="$BR_REMOTE_TS" +"%s")
         fi
-    else
-        echo "$BR_REMOTE_TS" > $BR_WORKDIR/timestamp.txt
-        TO_UPDATE=true
-    fi
-    if $TO_UPDATE
-    then
-      cd $BR_WORKDIR
-      # 1. Get updated translation
-      wget --quiet --output-document=${BR_LNAME}.po \
-      --user=$TRANSIFEX_USER --password=$TRANSIFEX_PASSWD \
-      $TRANSIFEX_API_URL/resource/$BR_RESOURCE/translation/$LANG/?file
 
-      # 2. Compile and archive
-      msgfmt -o cataclysm-dda.mo ${BR_LNAME}.po
-      MO_DIR="lang/mo/$LANG/LC_MESSAGES/"
-      if [ ! -d "$MO_DIR" ]
-      then
-        mkdir -p $MO_DIR
-      fi
-      cp cataclysm-dda.mo $MO_DIR
-      zip -q -9 latest.zip $MO_DIR/cataclysm-dda.mo
-      tar -z -c -f latest.tar.gz $MO_DIR/cataclysm-dda.mo
+        # Compare local/remote timestamps.
+        BR_WORKDIR=$BR_LNAME
+        if [ ! -d "$BR_WORKDIR" ]
+        then
+            mkdir "$BR_WORKDIR"
+        fi
+        if [ -f "$BR_WORKDIR/timestamp.txt" ]
+        then
+            BR_LOCAL_TS=$(cat "$BR_WORKDIR/timestamp.txt")
+            if [ $BR_LOCAL_TS -lt $BR_REMOTE_TS ]
+            then
+              echo "$BR_REMOTE_TS" > $BR_WORKDIR/timestamp.txt
+              TO_UPDATE=true
+            fi
+        else
+            echo "$BR_REMOTE_TS" > $BR_WORKDIR/timestamp.txt
+            TO_UPDATE=true
+        fi
+        if $TO_UPDATE
+        then
+          cd $BR_WORKDIR
+          # 1. Get updated translation
+          wget --quiet --output-document=${BR_LNAME}.po \
+          --user=$TRANSIFEX_USER --password=$TRANSIFEX_PASSWD \
+          $TRANSIFEX_API_URL/resource/$BR_RESOURCE/translation/$LL/?file
 
-      # 3. Upload translation to ftp
-      echo "Start uploading... $BR_LNAME updates."
-      FTP_CMD="cd data/$LANG/$BR_LNAME; put latest.zip; put latest.tar.gz; \\
-      put cataclysm-dda.mo; put timestamp.txt; bye"
-      lftp -e "$FTP_CMD" -u $FTP_USER,$FTP_PASSWD $FTP_HOST &>/dev/null
+          # 2. Compile and archive
+          msgfmt -o cataclysm-dda.mo ${BR_LNAME}.po
+          MO_DIR="lang/mo/$LL/LC_MESSAGES/"
+          if [ ! -d "$MO_DIR" ]
+          then
+            mkdir -p $MO_DIR
+          fi
+          cp cataclysm-dda.mo $MO_DIR
+          zip -q -9 latest.zip $MO_DIR/cataclysm-dda.mo
+          tar -z -c -f latest.tar.gz $MO_DIR/cataclysm-dda.mo
 
-      # 4. Clean
-      rm -rf lang
-      rm cataclysm-dda.mo
-      rm latest.*
-      rm *.po
-      cd $WORKING_DIR
-    fi
+          # 3. Upload translation to ftp
+          echo "Start uploading... $BR_LNAME updates."
+          FTP_CMD="cd data/$LL/$BR_LNAME; put latest.zip; put latest.tar.gz; \\
+          put cataclysm-dda.mo; put timestamp.txt; bye"
+          lftp -e "$FTP_CMD" -u $FTP_USER,$FTP_PASSWD $FTP_HOST &>/dev/null
+
+          # 4. Clean
+          rm -rf lang
+          rm cataclysm-dda.mo
+          rm latest.*
+          rm *.po
+          cd $WORKING_DIR
+        fi
+    done
 done
 cd $OLD_PWD
