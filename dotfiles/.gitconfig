@@ -1,0 +1,11 @@
+[user]
+	name = Vlasov Vitaly
+	email = vnigtha@gmail.com
+
+[merge]
+    tool = right_meld
+    conflictstyle = diff3
+    [mergetool "right_meld"]
+    cmd = meld --diff $BASE $LOCAL --diff $BASE $REMOTE --diff $LOCAL $MERGED $REMOTE
+[push]
+	default = simple
