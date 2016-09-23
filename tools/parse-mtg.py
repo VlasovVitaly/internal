@@ -382,11 +382,22 @@ if __name__ == '__main__':
         metavar="OUTPUTFILE",
         help="Output file name"
     )
+    test_sub = subparsers.add_parser(
+        "testurl",
+        help="Test card url"
+    )
+    test_sub.add_argument(
+        "url",
+        metavar="URL",
+        help="Gatherer card url"
+    )
     args = dict(vars(parser.parse_args()))
     if args['mode'] == 'load':
         cards = load_from_pickle(args['input_filename'])
         pprint_cards(cards)
     elif args['mode'] == 'parse':
         parse_set_url(search_page_url, args['set_name'], args['output_filename'])
-
+    elif args['mode'] == 'testurl':
+        ret = parse_card_from_url(args['url'])
+        print(ret or "Can't parse card from {}".format(args['url']))
     sys.exit(0)
