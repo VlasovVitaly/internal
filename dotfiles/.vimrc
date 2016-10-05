@@ -11,6 +11,7 @@ set nobackup
 set showcmd
 set autoindent
 set noincsearch
+set wildmenu
 "set ignorecase
 
 syntax on
@@ -52,7 +53,6 @@ let g:airline#extensions#whitespace#checks = [ 'indent', 'trailing', 'mixed-inde
 
 let g:airline_left_sep = '▶'
 let g:airline_right_sep = '◀'
-"let g:airline_symbols.linenr = '␊'
 let g:airline_symbols.linenr = '␤'
 let g:airline_symbols.branch = '⎇'
 let g:airline_symbols.paste = 'ρ'
