@@ -1,3 +1,5 @@
+set nocompatible
+
 colorscheme default
 
 " Default TAB/SPACE config
