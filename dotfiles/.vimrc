@@ -39,6 +39,7 @@ set statusline+=(%P)
 set laststatus=2
 
 execute pathogen#infect()
+execute pathogen#helptags()
 
 " vim-airlineconfig
 let g:airline#extensions#tabline#enabled = 1
