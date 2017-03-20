@@ -1,0 +1,13 @@
+sudo
+mc
+git
+smplayer
+firefox
+clementine
+vim
+keepassx2
+firefox-i18n-ru
+transmission-gtk
+evolution
+goldendict
+wget
