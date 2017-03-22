@@ -1,11 +1,18 @@
 [user]
-	name = Vlasov Vitaly
-	email = vnigtha@gmail.com
+    name = Vlasov Vitaly
+    email = vnigtha@gmail.com
+
+[core]
+    editor = vim
+
+[grep]
+    lineNumber = true
 
 [merge]
     tool = right_meld
     conflictstyle = diff3
     [mergetool "right_meld"]
     cmd = meld --diff $BASE $LOCAL --diff $BASE $REMOTE --diff $LOCAL $MERGED $REMOTE
+
 [push]
-	default = simple
+    default = simple
