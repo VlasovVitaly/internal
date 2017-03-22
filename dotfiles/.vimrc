@@ -10,11 +10,14 @@ set shiftwidth=4
 
 set number
 set nobackup
+set noswapfile
 set showcmd
 set autoindent
 set noincsearch
 set wildmenu
 "set ignorecase
+
+set cryptmethod=blowfish2
 
 syntax on
 filetype on
@@ -48,6 +51,10 @@ if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 
+" NERDTree conf
+let NERDTreeIgnore = ['\.pyc$']
+
+" Airline conf
 let g:airline#extensions#branch#enabled=1
 let g:airline#extensions#hunks#enabled=1
 let g:airline#extensions#wordcount#enabled = 0
@@ -62,6 +69,8 @@ let g:airline_symbols.paste = 'ρ'
 let g:airline_symbols.notexists = '∄'
 let g:airline_symbols.whitespace = 'Ξ'
 
+" Editorsconfig
+let g:EditorConfig_exclude_patterns = [ 'fugitive://.*', 'scp://.*' ]
 " Autocmd config
 if has("autocmd")
     autocmd FileType make setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
