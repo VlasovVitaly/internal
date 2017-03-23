@@ -9,6 +9,7 @@ extra/evolution
 extra/firefox
 extra/firefox-i18n-ru
 extra/git
+extra/gnome-tweak-tool
 extra/libreoffice-still-ru
 extra/python-lxml
 extra/transmission-gtk
