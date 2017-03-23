@@ -71,6 +71,7 @@ let g:airline_symbols.whitespace = 'Ξ'
 
 " Editorsconfig
 let g:EditorConfig_exclude_patterns = [ 'fugitive://.*', 'scp://.*' ]
+
 " Autocmd config
 if has("autocmd")
     autocmd FileType make setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
