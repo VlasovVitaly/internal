@@ -5,9 +5,11 @@ community/keepassx2
 community/mc
 community/smplayer
 core/sudo
+extra/bind-tools
 extra/evolution
 extra/firefox
 extra/firefox-i18n-ru
+extra/flashplugin
 extra/git
 extra/gnome-tweak-tool
 extra/libreoffice-still-ru
