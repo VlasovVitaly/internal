@@ -4,6 +4,12 @@ community/goldendict
 community/keepassx2
 community/mc
 community/smplayer
+community/ttf-anonymous-pro
+community/ttf-droid
+community/ttf-fira-sans
+community/ttf-liberation
+community/ttf-roboto
+community/ttf-ubuntu-font-family
 core/sudo
 extra/bind-tools
 extra/evolution
@@ -15,5 +21,6 @@ extra/gnome-tweak-tool
 extra/libreoffice-still-ru
 extra/python-lxml
 extra/transmission-gtk
+extra/ttf-bitstream-vera
 extra/vim
 extra/wget
