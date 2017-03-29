@@ -1,3 +1,6 @@
+aur/dropbox
+aur/grub2-theme-archlinux
+aur/ttf-fantasque-sans
 community/clementine
 community/flake8
 community/goldendict
