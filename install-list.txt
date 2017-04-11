@@ -13,6 +13,7 @@ community/ttf-fira-sans
 community/ttf-liberation
 community/ttf-roboto
 community/ttf-ubuntu-font-family
+community/vim-systemd
 core/sudo
 extra/bind-tools
 extra/evolution
