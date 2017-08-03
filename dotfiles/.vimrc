@@ -41,8 +41,8 @@ set statusline+=\ Линия:%l/%L
 set statusline+=(%P)
 set laststatus=2
 
-execute pathogen#infect()
-execute pathogen#helptags()
+call pathogen#infect()
+call pathogen#helptags()
 
 " vim-airlineconfig
 let g:airline#extensions#tabline#enabled = 1
