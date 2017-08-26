@@ -1,5 +1,6 @@
 aur/dropbox
 aur/grub2-theme-archlinux
+aur/telegram-desktop-bin
 aur/ttf-fantasque-sans
 community/clementine
 community/flake8
