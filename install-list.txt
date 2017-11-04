@@ -1,7 +1,7 @@
 aur/dropbox
 aur/grub2-theme-archlinux
 aur/telegram-desktop-bin
-aur/ttf-fantasque-sans
+aur/ttf-fantasque-sans-mono
 community/clementine
 community/flake8
 community/goldendict
@@ -15,6 +15,7 @@ community/ttf-liberation
 community/ttf-roboto
 community/ttf-ubuntu-font-family
 community/vim-systemd
+community/zeal
 core/sudo
 extra/bind-tools
 extra/evolution
