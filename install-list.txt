@@ -1,4 +1,5 @@
 aur/dropbox
+aur/flatplat-blue-theme
 aur/grub2-theme-archlinux
 aur/telegram-desktop-bin
 aur/ttf-fantasque-sans-mono
