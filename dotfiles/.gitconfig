@@ -16,3 +16,6 @@
 
 [push]
     default = simple
+
+[alias]
+    ccount = rev-list --count
