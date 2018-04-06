@@ -26,6 +26,8 @@ filetype on
 set cursorline
 highlight Cursorline cterm=bold
 
+set spelllang=ru,en
+
 " custom statusline
 set statusline=
 set statusline+=%f
