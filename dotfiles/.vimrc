@@ -18,6 +18,7 @@ set wildmenu
 "set ignorecase
 
 set cryptmethod=blowfish2
+set spelllang=ru,en
 
 syntax on
 filetype on
@@ -25,8 +26,6 @@ filetype on
 " current line highlight
 set cursorline
 highlight Cursorline cterm=bold
-
-set spelllang=ru,en
 
 " custom statusline
 set statusline=
@@ -78,6 +77,7 @@ let g:EditorConfig_exclude_patterns = [ 'fugitive://.*', 'scp://.*' ]
 if has("autocmd")
     autocmd FileType make setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
     autocmd FileType yaml setlocal tabstop=2 softtabstop=2 shiftwidth=2 expandtab
+    autocmd FileType gitcommit setlocal spell spelllang=ru,en
 endif
 
 "Keyboard mapping
